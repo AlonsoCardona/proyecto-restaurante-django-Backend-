@@ -1,0 +1,41 @@
+{% extends "main/dashboard_base.html" %}
+
+{% block title %}Editar Orden - Izakaya Sakura{% endblock %}
+{% block page_title %}Editar Orden{% endblock %}
+{% block page_subtitle %}Modifica los datos de la orden{% endblock %}
+
+{% block extra_style %}
+<style>
+    .form-container { background: white; padding: 2.5rem; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.08); max-width: 600px; }
+    .form-group { margin-bottom: 1.5rem; }
+    .form-group label { font-weight: 600; color: #333; margin-bottom: 0.5rem; display: block; }
+    .form-control { width: 100%; padding: 0.875rem; border: 2px solid #e0e0e0; border-radius: 10px; font-size: 1rem; transition: all 0.3s; }
+    .form-control:focus { outline: none; border-color: #c41e3a; box-shadow: 0 0 0 0.2rem rgba(196, 30, 58, 0.15); }
+    .form-actions { display: flex; gap: 1rem; margin-top: 2rem; }
+    .btn-submit { flex: 1; background: linear-gradient(135deg, #c41e3a 0%, #8b0000 100%); color: white; padding: 1rem; border: none; border-radius: 10px; font-weight: 600; cursor: pointer; transition: all 0.3s; }
+    .btn-submit:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(196, 30, 58, 0.4); }
+    .btn-cancel { flex: 1; background: #6c757d; color: white; padding: 1rem; border: none; border-radius: 10px; font-weight: 600; text-decoration: none; display: inline-block; text-align: center; transition: all 0.3s; }
+    .btn-cancel:hover { background: #545b62; color: white; transform: translateY(-2px); }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="form-container">
+    <h2 style="margin-bottom: 2rem; color: #333;"><i class="bi bi-pencil"></i> Editar Orden #{{ object.id }}</h2>
+    <form method="post">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="{{ form.mesa.id_for_label }}">Mesa</label>
+            {{ form.mesa }}
+        </div>
+        <div class="form-group">
+            <label for="{{ form.estado.id_for_label }}">Estado</label>
+            {{ form.estado }}
+        </div>
+        <div class="form-actions">
+            <button type="submit" class="btn-submit"><i class="bi bi-check-circle"></i> Guardar Cambios</button>
+            <a href="{% url 'ordenes:orden_list' %}" class="btn-cancel"><i class="bi bi-x-circle"></i> Cancelar</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

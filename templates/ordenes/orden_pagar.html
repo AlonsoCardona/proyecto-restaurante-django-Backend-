@@ -1,0 +1,86 @@
+{% extends "main/dashboard_base.html" %}
+
+{% block title %}Pagar Orden - Izakaya Sakura{% endblock %}
+{% block page_title %}Pagar Orden No. {{ orden.id }}{% endblock %}
+{% block page_subtitle %}Registra el pago y cierra la orden{% endblock %}
+
+{% block extra_style %}
+<style>
+    .pago-container { background: white; padding: 2.5rem; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.08); max-width: 700px; }
+    
+    .detalles-table { margin-bottom: 2rem; border-radius: 10px; overflow: hidden; border: 2px solid #f0f0f0; }
+    .table { margin: 0; }
+    .table thead { background: linear-gradient(135deg, #c41e3a 0%, #8b0000 100%); color: white; }
+    .table thead th { padding: 1rem; font-weight: 600; border: none; }
+    .table tbody td { padding: 1rem; border-bottom: 1px solid #f0f0f0; }
+    .table tbody tr:last-child td { border-bottom: none; }
+    
+    .total-section { background: linear-gradient(135deg, #c41e3a 0%, #8b0000 100%); color: white; padding: 1.5rem; border-radius: 10px; text-align: center; margin-bottom: 2rem; }
+    .total-label { font-size: 1rem; opacity: 0.9; margin-bottom: 0.5rem; }
+    .total-amount { font-size: 2.5rem; font-weight: 700; }
+    
+    .form-group { margin-bottom: 1.5rem; }
+    .form-group label { font-weight: 600; color: #333; margin-bottom: 0.5rem; display: block; }
+    .form-control { width: 100%; padding: 0.875rem; border: 2px solid #e0e0e0; border-radius: 10px; font-size: 1rem; transition: all 0.3s; }
+    .form-control:focus { outline: none; border-color: #c41e3a; box-shadow: 0 0 0 0.2rem rgba(196, 30, 58, 0.15); }
+    
+    .form-actions { display: flex; gap: 1rem; margin-top: 2rem; }
+    .btn-success { flex: 1; background: #28a745; color: white; padding: 1rem; border: none; border-radius: 10px; font-weight: 600; cursor: pointer; transition: all 0.3s; }
+    .btn-success:hover { background: #218838; transform: translateY(-2px); box-shadow: 0 6px 20px rgba(40, 167, 69, 0.4); }
+    .btn-cancel { flex: 1; background: #6c757d; color: white; padding: 1rem; border: none; border-radius: 10px; font-weight: 600; text-decoration: none; display: inline-block; text-align: center; transition: all 0.3s; }
+    .btn-cancel:hover { background: #545b62; color: white; transform: translateY(-2px); }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="pago-container">
+    <h2 style="margin-bottom: 2rem; color: #333;"><i class="bi bi-cash-stack"></i> Detalles de la Orden</h2>
+    
+    <div class="detalles-table">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Platillo</th>
+                    <th>Cantidad</th>
+                    <th>Precio</th>
+                    <th>Subtotal</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for detalle in detalles %}
+                <tr>
+                    <td><strong>{{ detalle.platillo.nombre }}</strong></td>
+                    <td>{{ detalle.cantidad }}</td>
+                    <td>${{ detalle.precio_unitario|floatformat:2 }}</td>
+                    <td><strong>${{ detalle.subtotal|floatformat:2 }}</strong></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    
+    <div class="total-section">
+        <div class="total-label">Total a Pagar</div>
+        <div class="total-amount">${{ total|floatformat:2 }}</div>
+    </div>
+    
+    <h3 style="margin-bottom: 1.5rem; color: #333;"><i class="bi bi-credit-card"></i> Información de Pago</h3>
+    
+    <form method="post">
+        {% csrf_token %}
+        {{ form.orden }}
+        <div class="form-group">
+            <label for="{{ form.metodo_pago.id_for_label }}">Método de Pago</label>
+            {{ form.metodo_pago }}
+        </div>
+        <div class="form-group">
+            <label for="{{ form.cantidad.id_for_label }}">Cantidad</label>
+            {{ form.cantidad }}
+        </div>
+        <div class="form-actions">
+            <button type="submit" class="btn-success"><i class="bi bi-check-circle"></i> Confirmar Pago</button>
+            <a href="{% url 'ordenes:orden_list' %}" class="btn-cancel"><i class="bi bi-x-circle"></i> Cancelar</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

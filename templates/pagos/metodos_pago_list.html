@@ -1,0 +1,175 @@
+{% extends 'main/dashboard_base.html' %}
+
+{% block title %}Métodos de Pago - Izakaya Sakura{% endblock %}
+{% block page_title %}Métodos de Pago{% endblock %}
+{% block page_subtitle %}Gestiona los métodos de pago del restaurante{% endblock %}
+
+{% block extra_style %}
+<style>
+    .page-header {
+        background: white;
+        padding: 2rem;
+        border-radius: 15px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        margin-bottom: 2rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    .page-header h1 {
+        font-size: 1.8rem;
+        font-weight: 700;
+        color: #333;
+        margin: 0;
+    }
+    .btn-primary-custom {
+        background: linear-gradient(135deg, #c41e3a 0%, #8b0000 100%);
+        color: white;
+        padding: 0.8rem 2rem;
+        border-radius: 50px;
+        border: none;
+        font-weight: 600;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        transition: all 0.3s;
+    }
+    .btn-primary-custom:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(196, 30, 58, 0.4);
+        color: white;
+    }
+    .metodos-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 1.5rem;
+        margin-top: 2rem;
+    }
+    .metodo-card {
+        background: white;
+        border-radius: 15px;
+        padding: 1.5rem;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        transition: all 0.3s;
+        border-left: 4px solid #c41e3a;
+    }
+    .metodo-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 25px rgba(0,0,0,0.12);
+    }
+    .metodo-nombre {
+        font-size: 1.3rem;
+        font-weight: 700;
+        color: #333;
+        margin-bottom: 1rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+    .metodo-nombre i {
+        color: #c41e3a;
+    }
+    .card-actions {
+        display: flex;
+        gap: 0.5rem;
+        padding-top: 1rem;
+        border-top: 1px solid #f0f0f0;
+    }
+    .btn-edit, .btn-delete {
+        flex: 1;
+        padding: 0.6rem;
+        border-radius: 8px;
+        border: none;
+        font-weight: 600;
+        font-size: 0.9rem;
+        cursor: pointer;
+        transition: all 0.3s;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.3rem;
+    }
+    .btn-edit {
+        background: linear-gradient(135deg, #c41e3a 0%, #8b0000 100%);
+        color: white;
+    }
+    .btn-edit:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(196, 30, 58, 0.3);
+        color: white;
+    }
+    .btn-delete {
+        background: #6c757d;
+        color: white;
+    }
+    .btn-delete:hover {
+        background: #5a6268;
+        transform: translateY(-2px);
+        color: white;
+    }
+    .empty-state {
+        text-align: center;
+        padding: 4rem 2rem;
+        background: white;
+        border-radius: 15px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    }
+    .empty-state i {
+        font-size: 4rem;
+        color: #ddd;
+        margin-bottom: 1rem;
+    }
+    .empty-state h3 {
+        color: #666;
+        margin-bottom: 0.5rem;
+        font-size: 1.2rem;
+    }
+    .empty-state p {
+        color: #999;
+        font-size: 1rem;
+        margin-bottom: 0;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h1><i class="bi bi-credit-card"></i> Métodos de Pago</h1>
+    <div class="page-header-actions">
+        <a href="{% url 'ordenes:metodos_pago_create' %}" class="btn-primary-custom">
+            <i class="bi bi-plus-circle"></i>
+            Nuevo Método
+        </a>
+    </div>
+</div>
+
+{% if metodos_pago %}
+<div class="metodos-grid">
+    {% for metodo in metodos_pago %}
+    <div class="metodo-card">
+        <div class="metodo-nombre">
+            <i class="bi bi-cash-stack"></i>
+            {{ metodo.nombre }}
+        </div>
+        
+        <div class="card-actions">
+            <a href="{% url 'ordenes:metodos_pago_edit' metodo.pk %}" class="btn-edit">
+                <i class="bi bi-pencil"></i> Editar
+            </a>
+            <a href="{% url 'ordenes:metodos_pago_delete' metodo.pk %}" class="btn-delete">
+                <i class="bi bi-trash"></i> Eliminar
+            </a>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% else %}
+<div class="empty-state">
+    <i class="bi bi-credit-card"></i>
+    <h3>No hay métodos de pago registrados</h3>
+    <p>Comienza agregando el primer método de pago (Efectivo, Tarjeta, etc.)</p>
+</div>
+{% endif %}
+{% endblock %}

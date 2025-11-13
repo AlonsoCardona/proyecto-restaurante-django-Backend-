@@ -1,0 +1,279 @@
+{% extends 'main/dashboard_base.html' %}
+
+{% block title %}Órdenes - Izakaya Sakura{% endblock %}
+{% block page_title %}Gestión de Órdenes{% endblock %}
+{% block page_subtitle %}Administra las órdenes del restaurante{% endblock %}
+
+{% block extra_style %}
+<style>
+    .page-header {
+        background: white;
+        padding: 2rem;
+        border-radius: 15px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        margin-bottom: 2rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    .page-header h1 {
+        font-size: 1.8rem;
+        font-weight: 700;
+        color: #333;
+        margin: 0;
+    }
+    .page-header-actions {
+        flex-shrink: 0;
+        margin-left: 3rem;
+    }
+    .btn-primary-custom {
+        background: linear-gradient(135deg, #c41e3a 0%, #8b0000 100%);
+        color: white;
+        padding: 0.8rem 2rem;
+        border-radius: 50px;
+        border: none;
+        font-weight: 600;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        transition: all 0.3s;
+    }
+    .btn-primary-custom:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(196, 30, 58, 0.4);
+        color: white;
+    }
+    .ordenes-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+        gap: 1.5rem;
+        margin-top: 2rem;
+    }
+    .orden-card {
+        background: white;
+        border-radius: 15px;
+        padding: 1.5rem;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        transition: all 0.3s;
+        border-left: 4px solid #c41e3a;
+    }
+    .orden-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 25px rgba(0,0,0,0.12);
+    }
+    .orden-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 1rem;
+        padding-bottom: 1rem;
+        border-bottom: 2px solid #f0f0f0;
+    }
+    .orden-numero {
+        font-size: 1.4rem;
+        font-weight: 700;
+        color: #333;
+    }
+    .estado-badge {
+        padding: 0.5rem 1rem;
+        border-radius: 50px;
+        font-weight: 600;
+        font-size: 0.85rem;
+        text-transform: uppercase;
+    }
+    .estado-pendiente {
+        background: #fff3cd;
+        color: #856404;
+    }
+    .estado-en_preparacion {
+        background: #cfe2ff;
+        color: #084298;
+    }
+    .estado-servida {
+        background: #d1e7dd;
+        color: #0f5132;
+    }
+    .estado-pagada {
+        background: #d3d3d4;
+        color: #141619;
+    }
+    .estado-cancelada {
+        background: #f8d7da;
+        color: #842029;
+    }
+    .orden-info {
+        margin-bottom: 1rem;
+    }
+    .info-item {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        margin-bottom: 0.5rem;
+        color: #666;
+        font-size: 0.95rem;
+    }
+    .info-item i {
+        color: #c41e3a;
+        font-size: 1.1rem;
+        width: 20px;
+    }
+    .info-label {
+        font-weight: 600;
+        color: #333;
+    }
+    .mesa-estado-badge {
+        display: inline-block;
+        padding: 0.3rem 0.8rem;
+        border-radius: 15px;
+        font-size: 0.75rem;
+        font-weight: 600;
+        margin-left: 0.5rem;
+    }
+    .mesa-disponible { background: #d4edda; color: #155724; }
+    .mesa-ocupada { background: #f8d7da; color: #721c24; }
+    .mesa-reservada { background: #fff3cd; color: #856404; }
+    .orden-total {
+        background: linear-gradient(135deg, #c41e3a 0%, #8b0000 100%);
+        color: white;
+        padding: 0.8rem;
+        border-radius: 10px;
+        text-align: center;
+        margin-bottom: 1rem;
+    }
+    .total-label {
+        font-size: 0.85rem;
+        opacity: 0.9;
+        margin-bottom: 0.2rem;
+    }
+    .total-value {
+        font-size: 1.5rem;
+        font-weight: 700;
+    }
+    .card-actions {
+        display: flex;
+        gap: 0.5rem;
+        padding-top: 1rem;
+        border-top: 1px solid #f0f0f0;
+    }
+    .btn-edit, .btn-delete {
+        flex: 1;
+        padding: 0.6rem;
+        border-radius: 8px;
+        border: none;
+        font-weight: 600;
+        font-size: 0.9rem;
+        cursor: pointer;
+        transition: all 0.3s;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.3rem;
+    }
+    .btn-edit {
+        background: linear-gradient(135deg, #c41e3a 0%, #8b0000 100%);
+        color: white;
+    }
+    .btn-edit:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(196, 30, 58, 0.3);
+        color: white;
+    }
+    .btn-delete {
+        background: #6c757d;
+        color: white;
+    }
+    .btn-delete:hover {
+        background: #5a6268;
+        transform: translateY(-2px);
+        color: white;
+    }
+    .empty-state {
+        text-align: center;
+        padding: 4rem 2rem;
+        background: white;
+        border-radius: 15px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    }
+    .empty-state i {
+        font-size: 4rem;
+        color: #ddd;
+        margin-bottom: 1rem;
+    }
+    .empty-state h3 {
+        color: #666;
+        margin-bottom: 0.5rem;
+        font-size: 1.2rem;
+    }
+    .empty-state p {
+        color: #999;
+        font-size: 1rem;
+        margin-bottom: 0;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h1><i class="bi bi-receipt"></i> Órdenes</h1>
+    <div class="page-header-actions">
+        <a href="{% url 'ordenes:orden_create' %}" class="btn-primary-custom">
+            <i class="bi bi-plus-circle"></i>
+            Nueva Orden
+        </a>
+    </div>
+</div>
+
+{% if ordenes %}
+<div class="ordenes-grid">
+    {% for orden in ordenes %}
+    <div class="orden-card">
+        <div class="orden-header">
+            <div class="orden-numero">Orden #{{ orden.id }}</div>
+            <span class="estado-badge estado-{{ orden.estado }}">
+                {{ orden.get_estado_display }}
+            </span>
+        </div>
+        
+        <div class="orden-info">
+            <div class="info-item">
+                <i class="bi bi-table"></i>
+                <span>
+                    <span class="info-label">Mesa:</span> {{ orden.mesa.nombre }}
+                    <span class="mesa-estado-badge mesa-{{ orden.mesa.estado.color }}">{{ orden.mesa.estado.nombre }}</span>
+                </span>
+            </div>
+            
+            <div class="info-item">
+                <i class="bi bi-calendar"></i>
+                <span><span class="info-label">Fecha:</span> {{ orden.fecha|date:"d/m/Y H:i" }}</span>
+            </div>
+        </div>
+        
+        <div class="orden-total">
+            <div class="total-label">Total</div>
+            <div class="total-value">${{ orden.total|floatformat:2 }}</div>
+        </div>
+        
+        <div class="card-actions">
+            <a href="{% url 'ordenes:orden_detalle_list' orden.pk %}" class="btn-edit">
+                <i class="bi bi-pencil"></i> Editar Detalles
+            </a>
+            {% if orden.estado != 'pagada' %}
+            <a href="{% url 'ordenes:orden_pagar' orden.pk %}" class="btn-delete" style="background: #28a745;">
+                <i class="bi bi-cash"></i> Pagar
+            </a>
+            {% endif %}
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% else %}
+<div class="empty-state">
+    <i class="bi bi-receipt"></i>
+    <h3>No hay órdenes registradas</h3>
+    <p>Comienza creando la primera orden para una mesa</p>
+</div>
+{% endif %}
+{% endblock %}

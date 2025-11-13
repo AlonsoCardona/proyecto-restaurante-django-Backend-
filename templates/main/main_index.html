@@ -1,0 +1,233 @@
+{% extends 'main/base_user.html' %}
+
+{% block content %}
+<div class="row mb-4">
+    <div class="col-12">
+        <h2 class="mb-4">Dashboard</h2>
+        
+        <!-- Stats Cards -->
+        <div class="row g-4 mb-4">
+            <div class="col-md-3">
+                <div class="stat-card card bg-white">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <h6 class="card-subtitle mb-1 text-muted">Ventas Hoy</h6>
+                                <h3 class="card-title">$1,245.80</h3>
+                                <p class="card-text small text-success"><i class="bi bi-arrow-up"></i> 12% desde ayer</p>
+                            </div>
+                            <div class="card-icon text-primary">
+                                <i class="bi bi-currency-dollar"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-3">
+                <div class="stat-card card bg-white">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <h6 class="card-subtitle mb-1 text-muted">Órdenes Hoy</h6>
+                                <h3 class="card-title">42</h3>
+                                <p class="card-text small text-success"><i class="bi bi-arrow-up"></i> 5% desde ayer</p>
+                            </div>
+                            <div class="card-icon text-success">
+                                <i class="bi bi-cart-check"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-3">
+                <div class="stat-card card bg-white">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <h6 class="card-subtitle mb-1 text-muted">Clientes Nuevos</h6>
+                                <h3 class="card-title">8</h3>
+                                <p class="card-text small text-danger"><i class="bi bi-arrow-down"></i> 2% desde ayer</p>
+                            </div>
+                            <div class="card-icon text-info">
+                                <i class="bi bi-people"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-3">
+                <div class="stat-card card bg-white">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <h6 class="card-subtitle mb-1 text-muted">Rating Promedio</h6>
+                                <h3 class="card-title">4.7/5</h3>
+                                <p class="card-text small text-success"><i class="bi bi-star-fill text-warning"></i> 128 reseñas</p>
+                            </div>
+                            <div class="card-icon text-warning">
+                                <i class="bi bi-star"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Charts and Recent Orders -->
+        <div class="row g-4">
+            <div class="col-md-8">
+                <div class="card h-100">
+                    <div class="card-header bg-white">
+                        <h5 class="card-title mb-0">Ventas de la Semana</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="d-flex align-items-center justify-content-center" style="height: 300px;">
+                            <p class="text-muted">Gráfico de ventas semanales aparecería aquí</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-4">
+                <div class="card h-100">
+                    <div class="card-header bg-white">
+                        <h5 class="card-title mb-0">Órdenes Recientes</h5>
+                    </div>
+                    <div class="card-body recent-orders">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <div class="d-flex align-items-center">
+                                <div class="bg-light rounded p-2 me-2">
+                                    <i class="bi bi-person text-primary"></i>
+                                </div>
+                                <div>
+                                    <h6 class="mb-0">María González</h6>
+                                    <small class="text-muted">#ORD-1245</small>
+                                </div>
+                            </div>
+                            <span class="order-status-badge bg-success">Completado</span>
+                        </div>
+                        
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <div class="d-flex align-items-center">
+                                <div class="bg-light rounded p-2 me-2">
+                                    <i class="bi bi-person text-primary"></i>
+                                </div>
+                                <div>
+                                    <h6 class="mb-0">Juan Pérez</h6>
+                                    <small class="text-muted">#ORD-1246</small>
+                                </div>
+                            </div>
+                            <span class="order-status-badge bg-warning text-dark">En preparación</span>
+                        </div>
+                        
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <div class="d-flex align-items-center">
+                                <div class="bg-light rounded p-2 me-2">
+                                    <i class="bi bi-person text-primary"></i>
+                                </div>
+                                <div>
+                                    <h6 class="mb-0">Laura Sánchez</h6>
+                                    <small class="text-muted">#ORD-1247</small>
+                                </div>
+                            </div>
+                            <span class="order-status-badge bg-info">En camino</span>
+                        </div>
+                        
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <div class="d-flex align-items-center">
+                                <div class="bg-light rounded p-2 me-2">
+                                    <i class="bi bi-person text-primary"></i>
+                                </div>
+                                <div>
+                                    <h6 class="mb-0">Roberto Díaz</h6>
+                                    <small class="text-muted">#ORD-1248</small>
+                                </div>
+                            </div>
+                            <span class="order-status-badge bg-secondary">Pendiente</span>
+                        </div>
+                        
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div class="d-flex align-items-center">
+                                <div class="bg-light rounded p-2 me-2">
+                                    <i class="bi bi-person text-primary"></i>
+                                </div>
+                                <div>
+                                    <h6 class="mb-0">Ana Mendoza</h6>
+                                    <small class="text-muted">#ORD-1249</small>
+                                </div>
+                            </div>
+                            <span class="order-status-badge bg-danger">Cancelado</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Popular Items -->
+        <div class="row mt-4">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header bg-white">
+                        <h5 class="card-title mb-0">Platos Más Populares</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Plato</th>
+                                        <th>Ventas</th>
+                                        <th>Ingresos</th>
+                                        <th>Rating</th>
+                                        <th>Tendencia</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Pollo a la Brasa</td>
+                                        <td>86</td>
+                                        <td>$1,204.00</td>
+                                        <td>4.8/5</td>
+                                        <td><i class="bi bi-arrow-up text-success"></i></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Lasaña de la Abuela</td>
+                                        <td>64</td>
+                                        <td>$831.36</td>
+                                        <td>4.7/5</td>
+                                        <td><i class="bi bi-arrow-up text-success"></i></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Salmón con Hierbas</td>
+                                        <td>52</td>
+                                        <td>$883.48</td>
+                                        <td>4.9/5</td>
+                                        <td><i class="bi bi-dash text-secondary"></i></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Pastel de Chocolate</td>
+                                        <td>48</td>
+                                        <td>$335.52</td>
+                                        <td>4.6/5</td>
+                                        <td><i class="bi bi-arrow-up text-success"></i></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Cheesecake de Frutos Rojos</td>
+                                        <td>42</td>
+                                        <td>$293.58</td>
+                                        <td>4.5/5</td>
+                                        <td><i class="bi bi-arrow-down text-danger"></i></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

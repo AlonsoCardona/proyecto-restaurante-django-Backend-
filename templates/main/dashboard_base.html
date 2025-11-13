@@ -1,0 +1,303 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Izakaya Sakura - Dashboard{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Sans JP', sans-serif;
+            background: #f5f7fa;
+            overflow-x: hidden;
+        }
+
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+            height: 100vh;
+            width: 280px;
+            background: linear-gradient(180deg, #ffffff 0%, #f8f9fa 100%);
+            box-shadow: 4px 0 20px rgba(0,0,0,0.08);
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .sidebar-header {
+            padding: 2rem 1.5rem;
+            background: linear-gradient(135deg, #c41e3a 0%, #8b0000 100%);
+            text-align: center;
+            border-bottom: 3px solid rgba(255,255,255,0.2);
+        }
+
+        .logo-container {
+            background: white;
+            border-radius: 15px;
+            padding: 1.5rem;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+        }
+
+        .logo-text {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #c41e3a;
+            margin: 0;
+            letter-spacing: 1px;
+        }
+
+        .logo-subtitle {
+            font-size: 0.85rem;
+            color: #666;
+            margin-top: 0.3rem;
+            font-weight: 400;
+        }
+
+        .sidebar-menu {
+            padding: 2rem 0;
+        }
+
+        .menu-section-title {
+            padding: 0 1.5rem;
+            margin-bottom: 1rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            color: #999;
+            letter-spacing: 1px;
+        }
+
+        .menu-item {
+            padding: 1rem 1.5rem;
+            display: flex;
+            align-items: center;
+            color: #555;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            position: relative;
+            margin: 0.3rem 1rem;
+            border-radius: 10px;
+        }
+
+        .menu-item:hover {
+            background: linear-gradient(135deg, #c41e3a 0%, #8b0000 100%);
+            color: white;
+            transform: translateX(5px);
+        }
+
+        .menu-item i {
+            font-size: 1.3rem;
+            margin-right: 1rem;
+            width: 25px;
+            text-align: center;
+        }
+
+        .menu-item span {
+            font-weight: 500;
+            font-size: 0.95rem;
+        }
+
+        .menu-item.active {
+            background: linear-gradient(135deg, #c41e3a 0%, #8b0000 100%);
+            color: white;
+        }
+
+        .main-content {
+            margin-left: 280px;
+            min-height: 100vh;
+            transition: all 0.3s ease;
+        }
+
+        .top-bar {
+            background: white;
+            padding: 1.5rem 2rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .top-bar-left h2 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #333;
+            margin: 0;
+        }
+
+        .top-bar-left p {
+            color: #999;
+            margin: 0;
+            font-size: 0.9rem;
+        }
+
+        .top-bar-right {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 0.5rem 1.5rem;
+            background: #f8f9fa;
+            border-radius: 50px;
+        }
+
+        .user-avatar {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #c41e3a 0%, #8b0000 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+            font-size: 1.2rem;
+        }
+
+        .user-details {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .user-name {
+            font-weight: 600;
+            color: #333;
+            font-size: 0.95rem;
+        }
+
+        .user-role {
+            font-size: 0.8rem;
+            color: #999;
+        }
+
+        .content-area {
+            padding: 2.5rem;
+        }
+
+        .logout-btn {
+            background: white;
+            color: #c41e3a;
+            border: 2px solid #c41e3a;
+            padding: 0.7rem 1.5rem;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .logout-btn:hover {
+            background: #c41e3a;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(196, 30, 58, 0.3);
+        }
+
+        {% block extra_style %}{% endblock %}
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <div class="logo-container">
+                <h1 class="logo-text">Izakaya Sakura</h1>
+                <p class="logo-subtitle">Panel de Control</p>
+            </div>
+        </div>
+
+        <div class="sidebar-menu">
+            <div class="menu-section-title">Menú Principal</div>
+            <a href="{% url 'dashboard' %}" class="menu-item {% if request.resolver_match.url_name == 'dashboard' %}active{% endif %}">
+                <i class="bi bi-speedometer2"></i>
+                <span>Dashboard</span>
+            </a>
+            <a href="{% url 'ordenes:mesas_list' %}" class="menu-item {% if 'mesas_list' in request.resolver_match.url_name %}active{% endif %}">
+                <i class="bi bi-table"></i>
+                <span>Mesas</span>
+            </a>
+            <a href="{% url 'ordenes:mesas_estado_list' %}" class="menu-item {% if 'mesas_estado' in request.resolver_match.url_name %}active{% endif %}">
+                <i class="bi bi-circle-square"></i>
+                <span>Estados de Mesas</span>
+            </a>
+            <a href="{% url 'platillos:categoria_list' %}" class="menu-item {% if 'categoria' in request.resolver_match.url_name %}active{% endif %}">
+                <i class="bi bi-bookmarks"></i>
+                <span>Categorías</span>
+            </a>
+            <a href="{% url 'platillos:platillos_list' %}" class="menu-item {% if 'platillos' in request.resolver_match.url_name %}active{% endif %}">
+                <i class="bi bi-box-seam"></i>
+                <span>Platillos</span>
+            </a>
+            <a href="{% url 'ordenes:orden_list' %}" class="menu-item {% if 'orden' in request.resolver_match.url_name %}active{% endif %}">
+                <i class="bi bi-receipt"></i>
+                <span>Órdenes</span>
+            </a>
+            <a href="{% url 'ordenes:metodos_pago_list' %}" class="menu-item {% if 'metodos_pago' in request.resolver_match.url_name %}active{% endif %}">
+                <i class="bi bi-credit-card"></i>
+                <span>Métodos de Pago</span>
+            </a>
+            <a href="#" class="menu-item">
+                <i class="bi bi-people"></i>
+                <span>Clientes</span>
+            </a>
+            
+            <div class="menu-section-title" style="margin-top: 2rem;">Configuración</div>
+            <a href="#" class="menu-item">
+                <i class="bi bi-gear"></i>
+                <span>Ajustes</span>
+            </a>
+            <a href="{% url 'main_index' %}" class="menu-item">
+                <i class="bi bi-house"></i>
+                <span>Ir al Sitio</span>
+            </a>
+        </div>
+    </div>
+
+    <div class="main-content">
+        <div class="top-bar">
+            <div class="top-bar-left">
+                <h2>{% block page_title %}Dashboard{% endblock %}</h2>
+                <p>{% block page_subtitle %}Panel de administración{% endblock %}</p>
+            </div>
+            <div class="top-bar-right">
+                <div class="user-info">
+                    <div class="user-avatar">{{ user.username|first|upper }}</div>
+                    <div class="user-details">
+                        <span class="user-name">{{ user.username }}</span>
+                        <span class="user-role">Administrador</span>
+                    </div>
+                </div>
+                <a href="{% url 'accounts:logout' %}" class="logout-btn">
+                    <i class="bi bi-box-arrow-right"></i>
+                    Cerrar Sesión
+                </a>
+            </div>
+        </div>
+
+        <div class="content-area">
+            {% block content %}
+            {% endblock %}
+        </div>
+    </div>
+
+    <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+    {% block extra_scripts %}{% endblock %}
+</body>
+</html>

@@ -1,0 +1,59 @@
+{% extends "main/dashboard_base.html" %}
+
+{% block title %}Estados de Mesas - Izakaya Sakura{% endblock %}
+{% block page_title %}Estados de Mesas{% endblock %}
+{% block page_subtitle %}Administra los posibles estados de las mesas{% endblock %}
+
+{% block extra_style %}
+<style>
+    .page-header { background: white; padding: 2rem; border-radius: 15px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); margin-bottom: 2rem; display: flex; justify-content: space-between; align-items: center; }
+    .page-header h1 { font-size: 1.8rem; font-weight: 700; color: #333; margin: 0; }
+    .page-header-actions { flex-shrink: 0; margin-left: 3rem; }
+    .btn-primary-custom { background: linear-gradient(135deg, #c41e3a 0%, #8b0000 100%); color: white; padding: 0.8rem 2rem; border-radius: 50px; border: none; font-weight: 600; text-decoration: none; display: inline-flex; align-items: center; gap: 0.5rem; transition: all 0.3s; }
+    .btn-primary-custom:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(196, 30, 58, 0.4); color: white; }
+    .estados-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 1.5rem; margin-top: 2rem; }
+    .estado-card { background: white; border-radius: 15px; padding: 1.5rem; box-shadow: 0 4px 15px rgba(0,0,0,0.08); transition: all 0.3s; position: relative; }
+    .color-indicator { position: absolute; top: 1.5rem; right: 1.5rem; width: 30px; height: 30px; border-radius: 50%; border: 3px solid white; box-shadow: 0 2px 8px rgba(0,0,0,0.2); }
+    .color-rojo { background: #dc3545; }
+    .color-verde { background: #28a745; }
+    .color-amarillo { background: #ffc107; }
+    .estado-card:hover { transform: translateY(-5px); box-shadow: 0 8px 25px rgba(0,0,0,0.12); }
+    .estado-nombre { font-size: 1.3rem; font-weight: 700; color: #333; margin-bottom: 1rem; }
+    .estado-actions { display: flex; gap: 0.5rem; }
+    .btn-action { flex: 1; padding: 0.6rem; border-radius: 10px; border: none; font-weight: 600; font-size: 0.9rem; cursor: pointer; text-decoration: none; text-align: center; transition: all 0.3s; display: inline-flex; align-items: center; justify-content: center; gap: 0.3rem; }
+    .btn-edit { background: #007bff; color: white; }
+    .btn-edit:hover { background: #0056b3; color: white; transform: translateY(-2px); }
+    .btn-delete { background: #dc3545; color: white; }
+    .btn-delete:hover { background: #c82333; color: white; transform: translateY(-2px); }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h1><i class="bi bi-circle-square"></i> Estados de Mesas</h1>
+    <div class="page-header-actions">
+        <a href="{% url 'ordenes:mesas_estado_create' %}" class="btn-primary-custom"><i class="bi bi-plus-circle"></i> Nuevo Estado</a>
+    </div>
+</div>
+
+{% if mesas_estados %}
+<div class="estados-grid">
+    {% for mesa_estado in mesas_estados %}
+    <div class="estado-card">
+        <div class="color-indicator color-{{ mesa_estado.color }}"></div>
+        <div class="estado-nombre"><i class="bi bi-circle-fill"></i> {{ mesa_estado.nombre }}</div>
+        <div class="estado-actions">
+            <a href="{% url 'ordenes:mesas_estado_update' mesa_estado.pk %}" class="btn-action btn-edit"><i class="bi bi-pencil-square"></i> Editar</a>
+            <a href="{% url 'ordenes:mesas_estado_delete' mesa_estado.pk %}" class="btn-action btn-delete"><i class="bi bi-trash"></i> Eliminar</a>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% else %}
+<div style="text-align: center; padding: 4rem 2rem; background: white; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
+    <i class="bi bi-circle-square" style="font-size: 4rem; color: #ddd; margin-bottom: 1rem;"></i>
+    <h3 style="color: #666; margin-bottom: 0.5rem;">No hay estados registrados</h3>
+    <p style="color: #999;">Comienza agregando el primer estado</p>
+</div>
+{% endif %}
+{% endblock %}

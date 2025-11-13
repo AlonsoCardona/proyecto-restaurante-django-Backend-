@@ -1,0 +1,114 @@
+{% extends 'main/dashboard_base.html' %}
+
+{% block title %}Eliminar Método de Pago - Izakaya Sakura{% endblock %}
+{% block page_title %}Eliminar Método de Pago{% endblock %}
+{% block page_subtitle %}Confirma la eliminación del método de pago{% endblock %}
+
+{% block extra_style %}
+<style>
+    .delete-container {
+        background: white;
+        padding: 2.5rem;
+        border-radius: 15px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        max-width: 600px;
+    }
+    .warning-box {
+        background: #fff3cd;
+        border-left: 4px solid #ffc107;
+        padding: 1.5rem;
+        border-radius: 10px;
+        margin-bottom: 2rem;
+    }
+    .warning-box i {
+        color: #856404;
+        font-size: 2rem;
+        margin-bottom: 0.5rem;
+    }
+    .warning-box p {
+        color: #856404;
+        font-size: 1.1rem;
+        margin: 0;
+        font-weight: 500;
+    }
+    .metodo-info {
+        background: #f8f9fa;
+        padding: 1.5rem;
+        border-radius: 10px;
+        margin-bottom: 2rem;
+    }
+    .metodo-info h4 {
+        color: #333;
+        margin-bottom: 0.5rem;
+    }
+    .metodo-info p {
+        color: #666;
+        margin: 0;
+        font-size: 1.1rem;
+    }
+    .form-actions {
+        display: flex;
+        gap: 1rem;
+    }
+    .btn-delete {
+        flex: 1;
+        background: #dc3545;
+        color: white;
+        padding: 1rem;
+        border: none;
+        border-radius: 10px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s;
+    }
+    .btn-delete:hover {
+        background: #c82333;
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(220, 53, 69, 0.4);
+    }
+    .btn-cancel {
+        flex: 1;
+        background: #6c757d;
+        color: white;
+        padding: 1rem;
+        border: none;
+        border-radius: 10px;
+        font-weight: 600;
+        text-decoration: none;
+        display: inline-block;
+        text-align: center;
+        transition: all 0.3s;
+    }
+    .btn-cancel:hover {
+        background: #545b62;
+        color: white;
+        transform: translateY(-2px);
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="delete-container">
+    <div class="warning-box">
+        <i class="bi bi-exclamation-triangle-fill"></i>
+        <p>¿Estás seguro de que deseas eliminar este método de pago?</p>
+    </div>
+    
+    <div class="metodo-info">
+        <h4>Método de Pago:</h4>
+        <p><strong>{{ object.nombre }}</strong></p>
+    </div>
+    
+    <form method="post">
+        {% csrf_token %}
+        <div class="form-actions">
+            <button type="submit" class="btn-delete">
+                <i class="bi bi-trash"></i> Sí, Eliminar
+            </button>
+            <a href="{% url 'ordenes:metodos_pago_list' %}" class="btn-cancel">
+                <i class="bi bi-x-circle"></i> Cancelar
+            </a>
+        </div>
+    </form>
+</div>
+{% endblock %}

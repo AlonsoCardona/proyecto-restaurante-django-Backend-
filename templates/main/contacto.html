@@ -1,0 +1,354 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Izakaya Sakura - Contacto</title>
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&display=swap');
+
+        body {
+            font-family: 'Noto Sans JP', sans-serif;
+            background-color: #f8f9fa;
+        }
+
+        .navbar {
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .navbar-brand {
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: #c41e3a !important;
+        }
+
+        .contact-header {
+            background: linear-gradient(135deg, #c41e3a 0%, #8b0000 100%);
+            color: white;
+            padding: 5rem 0 3rem 0;
+            text-align: center;
+        }
+
+        .contact-header h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .contact-header p {
+            font-size: 1.2rem;
+            font-weight: 300;
+        }
+
+        .contact-section {
+            padding: 5rem 0;
+        }
+
+        .contact-form {
+            background: white;
+            border-radius: 15px;
+            padding: 3rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .contact-form h2 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 2rem;
+            color: #333;
+        }
+
+        .form-label {
+            font-weight: 600;
+            color: #555;
+        }
+
+        .form-control {
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            padding: 0.75rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .form-control:focus {
+            border-color: #c41e3a;
+            box-shadow: 0 0 0 0.2rem rgba(196, 30, 58, 0.25);
+        }
+
+        .btn-submit {
+            background-color: #c41e3a;
+            color: white;
+            padding: 12px 35px;
+            font-size: 1.1rem;
+            border-radius: 50px;
+            border: none;
+            transition: all 0.3s;
+            width: 100%;
+        }
+
+        .btn-submit:hover {
+            background-color: #a01729;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+
+        .contact-info {
+            background: white;
+            border-radius: 15px;
+            padding: 3rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            height: 100%;
+        }
+
+        .contact-info h2 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 2rem;
+            color: #333;
+        }
+
+        .contact-item {
+            margin-bottom: 2rem;
+        }
+
+        .contact-item h4 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #c41e3a;
+            margin-bottom: 0.5rem;
+        }
+
+        .contact-item p {
+            color: #666;
+            font-size: 1rem;
+            line-height: 1.6;
+        }
+
+        .map-section {
+            margin-top: 3rem;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        footer {
+            background-color: #1a1a1a;
+            color: #fff;
+            padding: 3rem 0 1.5rem 0;
+        }
+
+        footer h5 {
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+        }
+
+        footer p, footer a {
+            color: #bbb;
+            font-size: 0.95rem;
+        }
+
+        footer a:hover {
+            color: #c41e3a;
+            text-decoration: none;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid #333;
+            margin-top: 2rem;
+            padding-top: 1.5rem;
+            text-align: center;
+        }
+
+        .nav-link {
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-link:hover {
+            color: #c41e3a !important;
+        }
+
+        .alert-success {
+            border-radius: 10px;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container">
+            <a class="navbar-brand" href="{% url 'main_index' %}">Izakaya Sakura</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'main_index' %}">Inicio</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'menu' %}">Menú</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="{% url 'contacto' %}">Contacto</a>
+                    </li>
+                    {% if user.is_authenticated %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'perfil' %}">Mi Perfil</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'accounts:logout' %}">Cerrar Sesión</a>
+                        </li>
+                    {% else %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'login' %}">Iniciar Sesión</a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <header class="contact-header">
+        <div class="container">
+            <h1>Contáctanos</h1>
+            <p>Estamos aquí para atenderte. Envíanos tus preguntas, comentarios o reservaciones</p>
+        </div>
+    </header>
+
+    <section class="contact-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="contact-form">
+                        <h2>Envíanos un Mensaje</h2>
+                        <div id="successMessage" class="alert alert-success" role="alert">
+                            ¡Gracias por contactarnos! Tu mensaje ha sido enviado exitosamente. Nos pondremos en contacto contigo pronto.
+                        </div>
+                        <form id="contactForm">
+                            <div class="mb-3">
+                                <label for="nombre" class="form-label">Nombre Completo</label>
+                                <input type="text" class="form-control" id="nombre" name="nombre" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="email" class="form-label">Correo Electrónico</label>
+                                <input type="email" class="form-control" id="email" name="email" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="telefono" class="form-label">Teléfono</label>
+                                <input type="tel" class="form-control" id="telefono" name="telefono">
+                            </div>
+                            <div class="mb-3">
+                                <label for="asunto" class="form-label">Asunto</label>
+                                <select class="form-control" id="asunto" name="asunto" required>
+                                    <option value="">Selecciona un asunto</option>
+                                    <option value="reservacion">Reservación</option>
+                                    <option value="consulta">Consulta General</option>
+                                    <option value="comentario">Comentario o Sugerencia</option>
+                                    <option value="otro">Otro</option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label for="mensaje" class="form-label">Mensaje</label>
+                                <textarea class="form-control" id="mensaje" name="mensaje" rows="5" required></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-submit">Enviar Mensaje</button>
+                        </form>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="contact-info">
+                        <h2>Información de Contacto</h2>
+                        <div class="contact-item">
+                            <h4>Dirección</h4>
+                            <p>Av. Siempre Viva 123, Colonia Centro<br>Ciudad, CP 64000</p>
+                        </div>
+                        <div class="contact-item">
+                            <h4>Teléfono</h4>
+                            <p>81-1234-5678<br>81-8765-4321</p>
+                        </div>
+                        <div class="contact-item">
+                            <h4>Correo Electrónico</h4>
+                            <p>info@izakayasakura.com<br>reservaciones@izakayasakura.com</p>
+                        </div>
+                        <div class="contact-item">
+                            <h4>Horarios de Atención</h4>
+                            <p>Lunes a Viernes: 12:00 PM - 10:00 PM<br>
+                            Sábados y Domingos: 11:00 AM - 11:00 PM</p>
+                        </div>
+                        <div class="contact-item">
+                            <h4>Redes Sociales</h4>
+                            <p>Facebook: /IzakayaSakura<br>
+                            Instagram: @izakayasakura<br>
+                            Twitter: @izakayasakura</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="map-section">
+                <iframe 
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3596.1234567890!2d-100.31!3d25.67!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjXCsDQwJzEyLjAiTiAxMDDCsDE4JzM2LjAiVw!5e0!3m2!1ses!2smx!4v1234567890" 
+                    width="100%" 
+                    height="400" 
+                    style="border:0;" 
+                    allowfullscreen="" 
+                    loading="lazy">
+                </iframe>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <h5>Izakaya Sakura</h5>
+                    <p>Restaurante de comida japonesa auténtica en el corazón de la ciudad. Ofrecemos una experiencia culinaria única que combina tradición, calidad y sabor.</p>
+                </div>
+                <div class="col-md-4">
+                    <h5>Horarios</h5>
+                    <p>Lunes a Viernes: 12:00 PM - 10:00 PM<br>
+                    Sábados y Domingos: 11:00 AM - 11:00 PM</p>
+                </div>
+                <div class="col-md-4">
+                    <h5>Contacto</h5>
+                    <p>Av. Siempre Viva 123, Ciudad<br>
+                    Tel: 81-1234-5678<br>
+                    Email: info@izakayasakura.com</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Izakaya Sakura. Todos los derechos reservados. Diseñado con pasión por la gastronomía japonesa. Política de Privacidad | Términos y Condiciones</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+    <script>
+        // Simulación de envío de formulario
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Mostrar mensaje de éxito
+            document.getElementById('successMessage').style.display = 'block';
+            
+            // Limpiar formulario
+            this.reset();
+            
+            // Ocultar mensaje después de 5 segundos
+            setTimeout(function() {
+                document.getElementById('successMessage').style.display = 'none';
+            }, 5000);
+            
+            // Scroll al mensaje de éxito
+            document.getElementById('successMessage').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        });
+    </script>
+</body>
+</html>
