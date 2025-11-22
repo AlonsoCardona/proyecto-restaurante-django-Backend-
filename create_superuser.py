@@ -13,9 +13,7 @@ if not User.objects.filter(username='admin').exists():
     User.objects.create_superuser(
         username='admin',
         email='admin@izakayasakura.com',
-        password='admin123',  # CAMBIA ESTA CONTRASEÑA DESPUÉS
-        nombre='Administrador',
-        apellido='Sistema'
+        password='admin123'  # CAMBIA ESTA CONTRASEÑA DESPUÉS
     )
     print('✅ Superusuario creado: admin / admin123')
 else:
