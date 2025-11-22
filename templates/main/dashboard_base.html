@@ -253,6 +253,10 @@
                 <i class="bi bi-credit-card"></i>
                 <span>Métodos de Pago</span>
             </a>
+            <a href="{% url 'accounts:user_list' %}" class="menu-item {% if 'user_list' in request.resolver_match.url_name %}active{% endif %}">
+                <i class="bi bi-people"></i>
+                <span>Usuarios</span>
+            </a>
             
             <div class="menu-section-title" style="margin-top: 2rem;">Configuración</div>
             <a href="#" class="menu-item">

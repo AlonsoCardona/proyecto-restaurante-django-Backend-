@@ -1,26 +1,128 @@
-{% extends 'main/base_user.html' %}
+{% extends 'main/dashboard_base.html' %}
+
+{% block title %}Usuarios - Izakaya Sakura{% endblock %}
 
 {% block content %}
-<h1>Lista de Usuarios</h1>
-<table class="table">
-    <thead>
-        <tr>
-            <th>Username</th>
-            <th>Email</th>
-            <th>Nombre</th>
-            <th>Apellido</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for user in users %}
-        <tr>
-            <td>{{user.username}}</td>
-            <td>{{user.email}}</td>
-            <td>{{user.first_name}}</td>
-            <td>{{user.last_name}}</td>
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
+<div class="content-header">
+    <h1><i class="bi bi-people"></i> Gestión de Usuarios</h1>
+    <p>Lista de todos los usuarios registrados en el sistema</p>
+</div>
+
+<div class="card">
+    <div class="card-header">
+        <h5 class="mb-0"><i class="bi bi-list-ul"></i> Usuarios Registrados</h5>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th><i class="bi bi-person-badge"></i> Usuario</th>
+                        <th><i class="bi bi-person"></i> Nombre Completo</th>
+                        <th><i class="bi bi-envelope"></i> Email</th>
+                        <th><i class="bi bi-shield-check"></i> Rol</th>
+                        <th><i class="bi bi-calendar"></i> Fecha de Registro</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for user in users %}
+                    <tr>
+                        <td><strong>{{ user.username }}</strong></td>
+                        <td>{{ user.first_name }} {{ user.last_name }}</td>
+                        <td>{{ user.email }}</td>
+                        <td>
+                            {% if user.is_superuser %}
+                                <span class="badge bg-danger">Superadministrador</span>
+                            {% elif user.is_staff %}
+                                <span class="badge bg-warning">Administrador</span>
+                            {% else %}
+                                <span class="badge bg-info">Usuario</span>
+                            {% endif %}
+                        </td>
+                        <td>{{ user.date_joined|date:"d/m/Y H:i" }}</td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="5" class="text-center text-muted">
+                            <i class="bi bi-inbox" style="font-size: 2rem;"></i>
+                            <p>No hay usuarios registrados</p>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<style>
+    .content-header {
+        margin-bottom: 2rem;
+    }
+    
+    .content-header h1 {
+        font-size: 2rem;
+        font-weight: 700;
+        color: #333;
+        margin-bottom: 0.5rem;
+    }
+    
+    .content-header p {
+        color: #666;
+        margin: 0;
+    }
+    
+    .card {
+        border: none;
+        border-radius: 15px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        background: white;
+    }
+    
+    .card-header {
+        background: linear-gradient(135deg, #c41e3a 0%, #8b0000 100%);
+        color: white;
+        border-radius: 15px 15px 0 0 !important;
+        padding: 1.25rem 1.5rem;
+        border: none;
+    }
+    
+    .card-header h5 {
+        margin: 0;
+        font-weight: 600;
+    }
+    
+    .card-body {
+        padding: 1.5rem;
+    }
+    
+    .table thead th {
+        background: #f8f9fa;
+        color: #555;
+        font-weight: 600;
+        border: none;
+        padding: 1rem;
+    }
+    
+    .table tbody tr {
+        transition: all 0.3s;
+    }
+    
+    .table tbody tr:hover {
+        background: #f8f9fa;
+        transform: scale(1.01);
+    }
+    
+    .table td {
+        padding: 1rem;
+        vertical-align: middle;
+    }
+    
+    .badge {
+        padding: 0.5rem 1rem;
+        font-size: 0.85rem;
+        font-weight: 600;
+    }
+</style>
 
 {% endblock %}
