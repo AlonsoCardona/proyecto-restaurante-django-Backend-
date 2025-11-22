@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.db.models import Sum, Count, Avg, Max, Min
 from django.utils import timezone
@@ -23,6 +23,10 @@ def perfil_view(request):
 
 @login_required
 def dashboard_view(request):
+    # Solo permitir acceso a administradores
+    if not (request.user.is_staff or request.user.is_superuser):
+        return redirect('main_index')
+    
     ahora = timezone.now()
     hoy_inicio = ahora.replace(hour=0, minute=0, second=0, microsecond=0)
     hoy_fin = ahora.replace(hour=23, minute=59, second=59, microsecond=999999)

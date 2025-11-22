@@ -1,0 +1,22 @@
+databases:
+  - name: restaurante_db
+    plan: free
+    databaseName: restaurante
+    user: restaurante
+
+services:
+  - type: web
+    plan: free
+    name: restaurante
+    runtime: python
+    buildCommand: './build.sh'
+    startCommand: 'python -m gunicorn restaurante.asgi:application -k uvicorn.workers.UvicornWorker'
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: restaurante_db
+          property: connectionString
+      - key: SECRET_KEY
+        generateValue: true
+      - key: WEB_CONCURRENCY
+        value: 4

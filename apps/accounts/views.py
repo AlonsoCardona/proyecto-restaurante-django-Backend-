@@ -17,7 +17,8 @@ def login_view(request):
             usuario = authenticate(request, username=username, password=password)
             if usuario is not None:
                 login(request, usuario)
-                return redirect('index_user')
+                # Redirigir a la página de bienvenida (perfil)
+                return redirect('perfil')
             else:
                 form.add_error(None, 'Credenciales inválidas')
     context = {
@@ -53,6 +54,6 @@ class RegisterUserView(View):
                 password=password)
             user.save()
             
-            return redirect('accounts:login')
+            return redirect('login')
         return render(request, 'accounts/register.html', {'form': form})
 

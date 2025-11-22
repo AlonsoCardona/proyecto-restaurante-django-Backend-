@@ -31,6 +31,7 @@ urlpatterns = [
     path('accounts/', include('apps.accounts.urls')),
     path('platillos/', include('apps.platillos.urls')),
     path('ordenes/', include('apps.ordenes.urls')),
+    path('api/', include('apps.api.urls')),
     
     path('login/', auth_views.LoginView.as_view(template_name='main/login.html'), name='login'),
     path('perfil/', views.perfil_view, name='perfil'),
