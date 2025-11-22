@@ -10,11 +10,16 @@ User = get_user_model()
 
 # Crear superusuario si no existe
 if not User.objects.filter(username='admin').exists():
-    User.objects.create_superuser(
+    admin_user = User.objects.create_superuser(
         username='admin',
         email='admin@izakayasakura.com',
-        password='admin123'  # CAMBIA ESTA CONTRASEÑA DESPUÉS
+        password='admin123',
+        first_name='Administrador',
+        last_name='Sistema'
     )
+    admin_user.is_staff = True
+    admin_user.is_superuser = True
+    admin_user.save()
     print('✅ Superusuario creado: admin / admin123')
 else:
     print('ℹ️ El superusuario ya existe')

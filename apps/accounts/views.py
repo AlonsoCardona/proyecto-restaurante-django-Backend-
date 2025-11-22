@@ -44,16 +44,25 @@ class RegisterUserView(View):
     def post(self, request):
         form = RegistrationForm(request.POST)
         if form.is_valid():
-            username = form.cleaned_data['username']
-            email = form.cleaned_data['email']
-            password = form.cleaned_data['password1']
-            
-            user = AppUser.objects.create_user(
-                username=username,
-                email=email,
-                password=password)
-            user.save()
-            
-            return redirect('login')
+            try:
+                username = form.cleaned_data['username']
+                email = form.cleaned_data['email']
+                password = form.cleaned_data['password1']
+                
+                # Crear usuario con AbstractUser
+                user = AppUser.objects.create_user(
+                    username=username,
+                    email=email,
+                    password=password,
+                    first_name='',
+                    last_name=''
+                )
+                
+                # Loguear automáticamente después del registro
+                login(request, user)
+                return redirect('perfil')
+            except Exception as e:
+                form.add_error(None, f'Error al crear usuario: {str(e)}')
+        
         return render(request, 'accounts/register.html', {'form': form})
 
